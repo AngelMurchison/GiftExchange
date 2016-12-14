@@ -154,6 +154,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\GiftModel.cs" />
+    <Compile Include="Services\GiftModel.Services.cs" />
     <Compile Include="ViewModels\IndexGiftViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -196,6 +197,9 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Gift\Index.cshtml" />
+    <Content Include="Views\Gift\Create.cshtml" />
+    <Content Include="Views\Gift\Edit.cshtml" />
+    <Content Include="Views\Gift\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
