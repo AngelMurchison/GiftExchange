@@ -1,0 +1,67 @@
+﻿@model GiftExchange.Models.GiftModel
+
+@{
+    ViewBag.Title = "Open";
+}
+
+<h2>Open</h2>
+
+<div>
+    <h4>GiftModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GiftHint)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GiftHint)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ColorWrappingPaper)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColorWrappingPaper)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Height)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Height)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Width)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Width)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Depth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Depth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Confirm", "confirmToOpen", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

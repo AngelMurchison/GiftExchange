@@ -1,0 +1,37 @@
+﻿@model IEnumerable<GiftExchange.Models.GiftModel>
+
+@{
+    ViewBag.Title = "Unopened";
+}
+
+<h2>Choose a gift here</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GiftHint)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ColorWrappingPaper)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.GiftHint)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ColorWrappingPaper)
+        </td>
+        <td>
+            @Html.ActionLink("Open", "Open", new { id = item.Id }) |
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
