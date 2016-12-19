@@ -23,7 +23,7 @@ namespace GiftExchange.Models
 
         public double? Weight { get; set; }
 
-        public bool? isOpened { get; set; } = false;
+        public bool? isOpened { get; set; }
 
     }
 }

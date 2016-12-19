@@ -14,77 +14,118 @@ namespace GiftExchange.Controllers
     public class GiftController : Controller
     {
 
-        public static List<GiftModel> IndexList = Services.Services.Gifts;
-        public static List<GiftModel> UnopenedList = Services.Services.getUnopenedGifts();
+        public static List<GiftModel> IndexList = new List<GiftModel>();
 
-        public ActionResult Unopened()
-        {
-            return View(UnopenedList);
-        }
 
-        public ActionResult Open(int id)
-        {
-            bool? isopened = false;
-            IndexList = Services.Services.openGift(isopened, id);
-            
-            return View();
-        }
-
+        // GET
         public ActionResult Index()
         {
+            List<GiftModel> IndexList = Services.Services.getAllGifts();
             return View(IndexList);
         }
 
-        public ActionResult Create(FormCollection collection)
+        //PUT
+        public ActionResult Create()
         {
-            string contents = (collection["contents"]);
-            string gifthint = (collection["gifthint"]);
-            string colorwrappingpaper = (collection["colorwrappingpaper"]);
-            string height = (collection["height"]);
-            string width = (collection["width"]);
-            string depth = (collection["depth"]);
-            string weight = (collection["weight"]);
-            string isopened = (collection["isopened"]);
-            if (weight != null)
-            {
-                double? dblheight = double.Parse(height);
-                double? dblwidth = double.Parse(width);
-                double? dbldepth = double.Parse(depth);
-                double? dblweight = double.Parse(weight);
-                bool? boolopened = bool.Parse(isopened);
-                IndexList = Services.Services.addAGift(contents, gifthint, colorwrappingpaper, dblheight, dblwidth, dbldepth, dblweight, boolopened);
-            }
             return View();
         }
-
-        public ActionResult Edit(FormCollection collection, int id)
+        public ActionResult giftCreation (GiftModel gifttoadd)
         {
-            string contents = (collection["contents"]);
-            string gifthint = (collection["gifthint"]);
-            string colorwrappingpaper = (collection["colorwrappingpaper"]);
-            string height = (collection["height"]);
-            string width = (collection["width"]);
-            string depth = (collection["depth"]);
-            string weight = (collection["weight"]);
-            if (weight != null)
-            {
-                double? dblheight = double.Parse(height);
-                double? dblwidth = double.Parse(width);
-                double? dbldepth = double.Parse(depth);
-                double? dblweight = double.Parse(weight);
-                IndexList = Services.Services.editGift(contents, gifthint, colorwrappingpaper, dblheight, dblwidth, dbldepth, dblweight, id);
-            }
-            return View();
+            //var gifttoadd = new GiftModel
+            //{
+            //    Id = int.Parse(collection["Id"]),
+            //    Contents = (collection["contents"]),
+            //    GiftHint = (collection["gifthint"]),
+            //    ColorWrappingPaper = (collection["colorwrappingpaper"]),
+            //    Height = double.Parse(collection["height"]),
+            //    Width = double.Parse(collection["width"]),
+            //    Depth = double.Parse(collection["depth"]),
+            //    Weight = double.Parse(collection["weight"]),
+            //    isOpened = bool.Parse(collection["isopened"])
+            //};
+            Services.Services.addAGift(gifttoadd);
+            return RedirectToAction("Index");
         }
 
+        // POST
+        public ActionResult Edit(int id)
+        {
+            GiftModel gift = Services.Services.getAGift(id);
+            return View(gift);
+        }      
+        public ActionResult giftEdit(GiftModel gifttoedit)
+        {
+            //var gifttoedit = new GiftModel
+            //{
+            //    Id = int.Parse(collection["Id"]),
+            //    Contents = (collection["contents"]),
+            //    GiftHint = (collection["gifthint"]),
+            //    ColorWrappingPaper = (collection["colorwrappingpaper"]),
+            //    Height = double.Parse(collection["height"]),
+            //    Width = double.Parse(collection["width"]),
+            //    Depth = double.Parse(collection["depth"]),
+            //    Weight = double.Parse(collection["weight"]),
+            //    isOpened = bool.Parse(collection["isopened"])
+            //};
+            Services.Services.editGift(gifttoedit);
+            return RedirectToAction("Index");
+        }
+
+        // DELETE
         public ActionResult Delete(int id)
         {
-            GiftModel deleter = IndexList.Where(f => f.Id == id).Single();
-            deleter.Id = id;
-            IndexList = Services.Services.removeGift(id);
-
-
-            return View();
+            GiftModel gift = Services.Services.getAGift(id);
+            return View(gift);
         }
+        public ActionResult giftDeletion(int id)
+        {
+            //var gifttoremove = new GiftModel
+            //{
+            //    Id = int.Parse(collection["Id"]),
+            //    Contents = (collection["contents"]),
+            //    GiftHint = (collection["gifthint"]),
+            //    ColorWrappingPaper = (collection["colorwrappingpaper"]),
+            //    Height = double.Parse(collection["height"]),
+            //    Width = double.Parse(collection["width"]),
+            //    Depth = double.Parse(collection["depth"]),
+            //    Weight = double.Parse(collection["weight"]),
+            //    isOpened = bool.Parse(collection["isopened"])
+            //};
+            Services.Services.removeGift(id);
+            return RedirectToAction("Index");
+        }
+
+        // GET
+        public ActionResult Unopened()
+        {
+            List<GiftModel> UnopenedList = Services.Services.getUnopenedGifts();
+            return View(UnopenedList);
+        }
+
+        //POST
+        public ActionResult Open(int id)
+        {
+            GiftModel gift = Services.Services.getAGift(id);
+            return View(gift);
+        }
+        public ActionResult confirmToOpen(int id)
+        {
+            //var gifttoopen = new GiftModel
+            //{
+            //    Id = int.Parse(collection["Id"]),
+            //    Contents = (collection["contents"]),
+            //    GiftHint = (collection["gifthint"]),
+            //    ColorWrappingPaper = (collection["colorwrappingpaper"]),
+            //    Height = double.Parse(collection["height"]),
+            //    Width = double.Parse(collection["width"]),
+            //    Depth = double.Parse(collection["depth"]),
+            //    Weight = double.Parse(collection["weight"]),
+            //    isOpened = bool.Parse(collection["isopened"])
+            //};
+            var gifttoopen = Services.Services.getAGift(id);
+            Services.Services.openGift(gifttoopen);
+            return RedirectToAction("Index");
+        }
+
     }
 }
