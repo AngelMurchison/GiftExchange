@@ -1,0 +1,45 @@
+﻿@model GiftExchange.Models.GiftModel
+
+@{
+    ViewBag.Title = "confirmToOpen";
+}
+
+@if (Model.isOpened == false)
+{
+    <div>
+        <h3>Congratulations! Enjoy your @Html.DisplayFor(model => model.Contents).</h3>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Contents)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Contents)
+            </dd>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+
+@if (Model.isOpened == true)
+{
+    <div>
+        <h3>This gift has been opened already, these are its contents.</h3>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Contents)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Contents)
+            </dd>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

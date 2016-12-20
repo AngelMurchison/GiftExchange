@@ -31,18 +31,6 @@ namespace GiftExchange.Controllers
         }
         public ActionResult giftCreation (GiftModel gifttoadd)
         {
-            //var gifttoadd = new GiftModel
-            //{
-            //    Id = int.Parse(collection["Id"]),
-            //    Contents = (collection["contents"]),
-            //    GiftHint = (collection["gifthint"]),
-            //    ColorWrappingPaper = (collection["colorwrappingpaper"]),
-            //    Height = double.Parse(collection["height"]),
-            //    Width = double.Parse(collection["width"]),
-            //    Depth = double.Parse(collection["depth"]),
-            //    Weight = double.Parse(collection["weight"]),
-            //    isOpened = bool.Parse(collection["isopened"])
-            //};
             Services.Services.addAGift(gifttoadd);
             return RedirectToAction("Index");
         }
@@ -55,18 +43,6 @@ namespace GiftExchange.Controllers
         }      
         public ActionResult giftEdit(GiftModel gifttoedit)
         {
-            //var gifttoedit = new GiftModel
-            //{
-            //    Id = int.Parse(collection["Id"]),
-            //    Contents = (collection["contents"]),
-            //    GiftHint = (collection["gifthint"]),
-            //    ColorWrappingPaper = (collection["colorwrappingpaper"]),
-            //    Height = double.Parse(collection["height"]),
-            //    Width = double.Parse(collection["width"]),
-            //    Depth = double.Parse(collection["depth"]),
-            //    Weight = double.Parse(collection["weight"]),
-            //    isOpened = bool.Parse(collection["isopened"])
-            //};
             Services.Services.editGift(gifttoedit);
             return RedirectToAction("Index");
         }
@@ -79,27 +55,8 @@ namespace GiftExchange.Controllers
         }
         public ActionResult giftDeletion(int id)
         {
-            //var gifttoremove = new GiftModel
-            //{
-            //    Id = int.Parse(collection["Id"]),
-            //    Contents = (collection["contents"]),
-            //    GiftHint = (collection["gifthint"]),
-            //    ColorWrappingPaper = (collection["colorwrappingpaper"]),
-            //    Height = double.Parse(collection["height"]),
-            //    Width = double.Parse(collection["width"]),
-            //    Depth = double.Parse(collection["depth"]),
-            //    Weight = double.Parse(collection["weight"]),
-            //    isOpened = bool.Parse(collection["isopened"])
-            //};
             Services.Services.removeGift(id);
             return RedirectToAction("Index");
-        }
-
-        // GET
-        public ActionResult Unopened()
-        {
-            List<GiftModel> UnopenedList = Services.Services.getUnopenedGifts();
-            return View(UnopenedList);
         }
 
         //POST
@@ -110,22 +67,16 @@ namespace GiftExchange.Controllers
         }
         public ActionResult confirmToOpen(int id)
         {
-            //var gifttoopen = new GiftModel
-            //{
-            //    Id = int.Parse(collection["Id"]),
-            //    Contents = (collection["contents"]),
-            //    GiftHint = (collection["gifthint"]),
-            //    ColorWrappingPaper = (collection["colorwrappingpaper"]),
-            //    Height = double.Parse(collection["height"]),
-            //    Width = double.Parse(collection["width"]),
-            //    Depth = double.Parse(collection["depth"]),
-            //    Weight = double.Parse(collection["weight"]),
-            //    isOpened = bool.Parse(collection["isopened"])
-            //};
             var gifttoopen = Services.Services.getAGift(id);
-            Services.Services.openGift(gifttoopen);
-            return RedirectToAction("Index");
+            if (gifttoopen.isOpened == false)
+            {
+                Services.Services.openGift(gifttoopen);
+                return View(gifttoopen);
+            }
+            else
+            {
+                return View(gifttoopen);
+            }
         }
-
     }
 }

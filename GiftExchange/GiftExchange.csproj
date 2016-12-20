@@ -202,6 +202,7 @@
     <Content Include="Views\Gift\Delete.cshtml" />
     <Content Include="Views\Gift\Unopened.cshtml" />
     <Content Include="Views\Gift\Open.cshtml" />
+    <Content Include="Views\Gift\confirmToOpen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

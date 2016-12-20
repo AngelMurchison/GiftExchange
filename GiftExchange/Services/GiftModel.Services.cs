@@ -11,6 +11,14 @@ namespace GiftExchange.Services
     {
         private static string connectionStrings = @"Server=DESKTOP-577TSME\SQLEXPRESS;Database=GiftExchangeDB;Trusted_Connection=True;";
 
+        public static double parseSqlDouble(object measurement)
+        {
+            double rv = 0;
+            double.TryParse(measurement.ToString(), out rv);
+            return rv;
+
+        }
+
         public static List<GiftModel> getAllGifts()
         {
 
@@ -37,16 +45,20 @@ namespace GiftExchange.Services
                         var Weight = reader[7];
                         var isOpened = reader[8];
 
+                        var dblheight = parseSqlDouble(Height);
+                        var dblweight = parseSqlDouble(Weight);
+                        var dblwidth = parseSqlDouble(Width);
+                        var dbldepth = parseSqlDouble(Depth);
                         var gift = new GiftModel
                         {
                             Id = (int)id,
                             Contents = Contents as string,
                             GiftHint = GiftHint as string,
                             ColorWrappingPaper = ColorWrappingPaper as string,
-                            Height = Height as double?,
-                            Width = Width as double?,
-                            Depth = Depth as double?,
-                            Weight = Weight as double?,
+                            Height = dblheight,
+                            Width = dblwidth,
+                            Depth = dbldepth,
+                            Weight = dblweight,
                             isOpened = isOpened as bool?
                         };
                         rv.Add(gift);
@@ -55,7 +67,7 @@ namespace GiftExchange.Services
                 }
                 return rv;
             }
-        } // ask mark why values aren't being stored for dimensions.
+        }
 
         public static List<GiftModel> getUnopenedGifts()
         {
@@ -81,15 +93,20 @@ namespace GiftExchange.Services
                         var Depth = reader[5];
                         var Weight = reader[6];
 
+                        var dblheight = parseSqlDouble(Height);
+                        var dblweight = parseSqlDouble(Weight);
+                        var dblwidth= parseSqlDouble(Width);
+                        var dbldepth = parseSqlDouble(Depth);
+
                         var gift = new GiftModel
                         {
                             Id = (int)id,
                             GiftHint = GiftHint as string,
                             ColorWrappingPaper = ColorWrappingPaper as string,
-                            Height = Height as double?,
-                            Width = Width as double?,
-                            Depth = Depth as double?,
-                            Weight = Weight as double?,
+                            Height = dblheight,
+                            Width = dblwidth,
+                            Depth = dbldepth,
+                            Weight = dblweight,
                         };
                         rv.Add(gift);
                     }
@@ -127,14 +144,6 @@ namespace GiftExchange.Services
 
         public static void removeGift(int id)
         {
-            var ids = new List<int>();
-            List<GiftModel> gifts = getAllGifts();
-            foreach (var gift in gifts)
-            {
-                ids.Add(gift.Id);
-            }
-
-            if (ids.Contains(id))
             {
                 using (var connection = new SqlConnection(connectionStrings))
                 {
@@ -178,7 +187,7 @@ namespace GiftExchange.Services
                 {
                     cmd.Connection = connection;
                     cmd.CommandType = System.Data.CommandType.Text;
-                    cmd.CommandText = $@"UPDATE Gifts SET isOpened={true} WHERE Id={gift.Id};";
+                    cmd.CommandText = $@"UPDATE Gifts SET isOpened=1 WHERE Id={gift.Id};";
 
                     connection.Open();
                     var reader = cmd.ExecuteReader();
@@ -203,7 +212,6 @@ namespace GiftExchange.Services
                     var reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        // may need to start at 0.
                         var Contents = reader[0];
                         var GiftHint = reader[1];
                         var ColorWrappingPaper = reader[2];
@@ -213,16 +221,21 @@ namespace GiftExchange.Services
                         var Weight = reader[6];
                         var isOpened = reader[7];
 
+                        var dblheight = parseSqlDouble(Height);
+                        var dblweight = parseSqlDouble(Weight);
+                        var dblwidth = parseSqlDouble(Width);
+                        var dbldepth = parseSqlDouble(Depth);
+
                         var gift = new GiftModel
                         {
                             Id = (int)id,
                             Contents = Contents as string,
                             GiftHint = GiftHint as string,
                             ColorWrappingPaper = ColorWrappingPaper as string,
-                            Height = Height as double?,
-                            Width = Width as double?,
-                            Depth = Depth as double?,
-                            Weight = Weight as double?,
+                            Height = dblheight,
+                            Width = dblwidth,
+                            Depth = dbldepth,
+                            Weight = dblweight,
                             isOpened = isOpened as bool?
                         };
                         rv = gift;
